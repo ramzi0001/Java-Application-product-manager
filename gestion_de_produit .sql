@@ -1,0 +1,270 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.14
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 04, 2021 at 05:28 AM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `gestion de produit`
+--
+
+
+
+CREATE DATABASE IF NOT EXISTS gestion_de_produit ;
+USE gestion_de_produit;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `achat`
+--
+
+CREATE TABLE IF NOT EXISTS `achat` (
+  `N_achat` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_prenom_forn` varchar(30) NOT NULL,
+  `designation` varchar(50) NOT NULL,
+  `quantite` int(11) NOT NULL,
+  `prix_total` float NOT NULL,
+  `prix_unitaire` float NOT NULL,
+  `date_achat` date NOT NULL,
+  PRIMARY KEY (`N_achat`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client`
+--
+
+CREATE TABLE IF NOT EXISTS `client` (
+  `N_client` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_prenom` varchar(30) NOT NULL,
+  `N_telephone` varchar(20) DEFAULT NULL,
+  `Adresse` varchar(60) NOT NULL,
+  PRIMARY KEY (`N_client`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commande`
+--
+
+CREATE TABLE IF NOT EXISTS `commande` (
+  `N_commande` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_prenom_client` varchar(30) NOT NULL,
+  `wilaya` varchar(50) NOT NULL,
+  `jours` int(11) NOT NULL,
+  `prix_devise` double NOT NULL,
+  `budge` double NOT NULL,
+  `date_insert` date NOT NULL,
+  `date_versment` date NOT NULL,
+  `deadline` date DEFAULT NULL,
+  `note` varchar(50) DEFAULT NULL,
+  `tele` varchar(50) NOT NULL,
+  `page_facebook` varchar(50) NOT NULL,
+  `profile_facebook` varchar(50) NOT NULL,
+  `etat_vercement` varchar(50) NOT NULL,
+  `etat_commande` varchar(50) NOT NULL,
+  `sex` varchar(50) NOT NULL,
+  `but` varchar(50) NOT NULL,
+  `age` varchar(50) NOT NULL,
+  `date_start` date DEFAULT NULL,
+  `gain` float DEFAULT NULL,
+  PRIMARY KEY (`N_commande`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=316 ;
+
+--
+-- Dumping data for table `commande`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `facture`
+--
+
+CREATE TABLE IF NOT EXISTS `facture` (
+  `N_fact` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_prenom_forn` varchar(50) NOT NULL,
+  `montant_a_paye` float NOT NULL,
+  `montant_verser` float NOT NULL,
+  `montant_reste` float NOT NULL,
+  `date_versement` date NOT NULL,
+  `etat` varchar(12) NOT NULL,
+  PRIMARY KEY (`N_fact`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fornisseur`
+--
+
+CREATE TABLE IF NOT EXISTS `fornisseur` (
+  `N_forn` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_prenom` varchar(30) NOT NULL,
+  `N_telephone` varchar(20) DEFAULT NULL,
+  `Adresse` varchar(60) NOT NULL,
+  `Ville` varchar(25) NOT NULL,
+  PRIMARY KEY (`N_forn`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `info`
+--
+
+CREATE TABLE IF NOT EXISTS `info` (
+  `name` varchar(25) NOT NULL,
+  `tel` varchar(15) NOT NULL,
+  `addr` varchar(25) NOT NULL,
+  `tva` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `info`
+--
+
+INSERT INTO `info` (`name`, `tel`, `addr`, `tva`) VALUES
+('ziram', '0554789541', 'meftah', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pointage`
+--
+
+CREATE TABLE IF NOT EXISTS `pointage` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `dateversement` date DEFAULT NULL,
+  `dateabsonce` date DEFAULT NULL,
+  `nom` varchar(25) NOT NULL,
+  `prix` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock`
+--
+
+CREATE TABLE IF NOT EXISTS `stock` (
+  `N_prod` int(11) NOT NULL AUTO_INCREMENT,
+  `designation` varchar(50) NOT NULL,
+  `categorie` varchar(80) DEFAULT NULL,
+  `unite` varchar(10) NOT NULL,
+  `date_exp` date DEFAULT '2097-01-01',
+  `qte_totale` int(11) NOT NULL,
+  `qte_vente` int(11) NOT NULL,
+  `qte_reste` int(11) NOT NULL,
+  `prix_unt` float NOT NULL,
+  `prix_vent` float NOT NULL,
+  `gain` float NOT NULL,
+  `prix_grant` double NOT NULL,
+  `barcode` varchar(25) NOT NULL,
+  PRIMARY KEY (`N_prod`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_commande`
+--
+
+CREATE TABLE IF NOT EXISTS `stock_commande` (
+  `id` int(3) NOT NULL DEFAULT '0',
+  `gain` float NOT NULL DEFAULT '80',
+  `vent` float NOT NULL DEFAULT '300',
+  `achat` float NOT NULL DEFAULT '220',
+  `qnt` double NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `stock_commande`
+--
+
+INSERT INTO `stock_commande` (`id`, `gain`, `vent`, `achat`, `qnt`) VALUES
+(0, 80, 300, 220, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `grad` int(2) NOT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id_user`, `user`, `password`, `grad`) VALUES
+(1, 'root', 'root', 1);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vente`
+--
+
+CREATE TABLE IF NOT EXISTS `vente` (
+  `N_vente` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_prenom_client` varchar(60) NOT NULL,
+  `commentaire` varchar(80) DEFAULT NULL,
+  `marchendise` text NOT NULL,
+  `prix_a_payez` float NOT NULL,
+  `benefice` float NOT NULL,
+  `date_vente` datetime NOT NULL,
+  `vendeur` varchar(30) NOT NULL,
+  `cridit` varchar(11) NOT NULL,
+  PRIMARY KEY (`N_vente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vente_commande`
+--
+
+CREATE TABLE IF NOT EXISTS `vente_commande` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(25) NOT NULL,
+  `gain` float NOT NULL,
+  `ca` float NOT NULL,
+  `qnt` float NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+
+--
+-- Dumping data for table `vente_commande`
+--
+
+
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD("3030");
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
